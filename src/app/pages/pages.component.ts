@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-declare function inciarMenu(): any
-declare function initMain(): any
+declare function iniciarSidebar(): any
+declare function iniciarphonenyx():any
+declare function iniciarconfig():any
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
@@ -9,7 +10,8 @@ declare function initMain(): any
 export class PagesComponent implements OnInit {
 
   ngOnInit(): void {
-    inciarMenu();
-    initMain();
+
+    iniciarSidebar()
   }
+
 }

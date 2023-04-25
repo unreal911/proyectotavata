@@ -1,18 +1,30 @@
-<div class="layout-wrapper layout-content-navbar">
-  <div class="layout-container">
-    <app-sidebar></app-sidebar>
-    <div class="layout-page">
-      <app-header></app-header>
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
 
-      <div class="content-wrapper">
-        <div class="container-xxl flex-grow-1 container-p-y">
-          <router-outlet>
-          </router-outlet>
-        </div>
-      </div>
+  <div class="container-fluid px-0" data-layout="container">
+    <nav class="navbar navbar-vertical navbar-expand-lg">
+      <app-sidebar></app-sidebar>
+    </nav>
+    <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
 
-      <app-footer></app-footer>
+        <app-navbartop class="w-100"></app-navbartop>
+
+    </nav>
+    <div class="modal fade" id="searchBoxModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="true"
+      data-phoenix-modal="data-phoenix-modal" style="--phoenix-backdrop-opacity: 1;">
+      <app-search></app-search>
     </div>
 
+    <div class="content">
+
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</div>
+  <app-chathelp></app-chathelp>
+</main><!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<app-offcanvas></app-offcanvas>
