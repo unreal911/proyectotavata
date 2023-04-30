@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { authGoogle } from 'src/app/interfaces/authgoogle';
+import { AuthService } from 'src/app/services/auth.service';
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
   apiKey: "AIzaSyAxnw1Yx0XbkEfQMSAQNPwho7NZLnWNoNI",
@@ -16,9 +18,16 @@ const firebaseConfig = {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  bodyauth: authGoogle = {
+    displayName: '',
+    photoURL: '',
+    idToken: ''
+  }
+  constructor(private authService: AuthService) {
 
-  ngOnInit(): void
-  {
+  }
+
+  ngOnInit(): void {
     initializeApp(firebaseConfig);
   }
   google_call() {
@@ -30,10 +39,19 @@ export class LoginComponent implements OnInit {
         const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
+
+        this.bodyauth={
+          displayName:user.displayName,
+          photoURL:user.photoURL,
+          idToken:credential?.idToken
+        }
         console.log(user.photoURL)
         console.log(user.displayName)
         console.log(credential?.idToken)
-
+        this.authService.logingoogle(this.bodyauth).subscribe({
+          next:(r)=>{console.log(r)},
+          error:(e)=>{console.log(e)}
+        })
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       }).catch((error) => {
