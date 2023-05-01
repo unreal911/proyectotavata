@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { initializeApp } from "firebase/app";
+import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { authGoogle } from 'src/app/interfaces/authgoogle';
-import { AuthService } from 'src/app/services/auth.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
   apiKey: "AIzaSyAxnw1Yx0XbkEfQMSAQNPwho7NZLnWNoNI",
@@ -24,7 +25,12 @@ export class LoginComponent implements OnInit {
     photoURL: '',
     idToken: ''
   }
-  constructor(private authService: AuthService,private router:Router) {
+  form: FormGroup = new FormGroup({
+    correo: new FormControl(localStorage.getItem('correo') || '', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    recordar: new FormControl(false)
+  })
+  constructor(private usuarioService: UsuarioService, private router: Router, private fb: FormBuilder) {
 
   }
 
@@ -49,15 +55,15 @@ export class LoginComponent implements OnInit {
         console.log(user.photoURL)
         console.log(user.displayName)
         console.log(credential?.idToken)
-        this.authService.logingoogle(this.bodyauth).subscribe({
-          next: (r:any) => {
+        this.usuarioService.logingoogle(this.bodyauth).subscribe({
+          next: (r: any) => {
 
-             console.log(r)
-             localStorage.setItem('token', r.tokenSistema)
+            console.log(r)
+            localStorage.setItem('token', r.tokenSistema)
 
-             this.router.navigateByUrl('/dashboard')
+            this.router.navigateByUrl('/dashboard')
 
-            },
+          },
           error: (e) => { console.log(e) }
         })
         // IdP data available using getAdditionalUserInfo(result)
@@ -73,4 +79,20 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
+  login(){
+    console.log(this.form.value)
+    this.usuarioService.loginSistema(this.form.value).subscribe({
+      next:(r)=>{
+        console.log(r)
+        this.router.navigateByUrl('/dashboard')
+      },
+      error:(e)=>{
+        console.log(e)
+      },
+      complete:()=>{
+
+      }
+    })
+  }
+
 }

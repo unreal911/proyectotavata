@@ -9,9 +9,5 @@ const base_url = environment.url_api
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
-  logingoogle(body: authGoogle) {
-    const url = `${base_url}/auth/tokenfirebase`
-    return this.http.post(url, body)
-  }
+
 }

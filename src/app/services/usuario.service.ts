@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { Usuario, authGoogle, authSistema, respAuth, } from '../interfaces/authgoogle';
 const api_url = environment.url_api
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,26 @@ export class UsuarioService {
       }),
       catchError(error => of(false))
     );
+  }
+  logingoogle(body: authGoogle) {
+    const url = `${api_url}/auth/tokenfirebase`
+    return this.http.post<respAuth>(url, body).pipe(
+      tap(
+        (resp) => {
+          this.usuario = resp.usuario
+        }
+      )
+    )
+  }
+  loginSistema(body: authSistema) {
+    const url = `${api_url}/auth/login`
+    return this.http.post<respAuth>(url, body).pipe(
+      tap(
+        (resp) => {
+          this.usuario = resp.usuario
+          localStorage.setItem('token', resp.token)
+        }
+      )
+    )
   }
 }
