@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { authGoogle } from 'src/app/interfaces/authgoogle';
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
     photoURL: '',
     idToken: ''
   }
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,private router:Router) {
 
   }
 
@@ -40,17 +41,24 @@ export class LoginComponent implements OnInit {
         // The signed-in user info.
         const user = result.user;
 
-        this.bodyauth={
-          displayName:user.displayName,
-          photoURL:user.photoURL,
-          idToken:credential?.idToken
+        this.bodyauth = {
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          idToken: credential?.idToken
         }
         console.log(user.photoURL)
         console.log(user.displayName)
         console.log(credential?.idToken)
         this.authService.logingoogle(this.bodyauth).subscribe({
-          next:(r)=>{console.log(r)},
-          error:(e)=>{console.log(e)}
+          next: (r:any) => {
+
+             console.log(r)
+             localStorage.setItem('token', r.tokenSistema)
+
+             this.router.navigateByUrl('/dashboard')
+
+            },
+          error: (e) => { console.log(e) }
         })
         // IdP data available using getAdditionalUserInfo(result)
         // ...
