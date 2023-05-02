@@ -54,39 +54,42 @@
                       <div class="divider-content-center bg-white">or use email</div>
                     </div>
                     <form (ngSubmit)="registro()" [formGroup]="form">
-                      <div class="mb-3 text-start"><label class="form-label" for="name">Name</label><input
+                      <div class="mb-3 text-start"><label class="form-label" for="name">Nombre</label><input
                           formControlName="nombre" class="form-control" id="name" type="text" placeholder="Name" />
                         <span class="form-text text-danger" *ngIf="validarCampo('nombre')">El nombre es
                           obligatorio</span>
                       </div>
-                      <div class="mb-3 text-start"><label class="form-label" for="email">Email address</label><input
+                      <div class="mb-3 text-start"><label class="form-label" for="email">Correo</label><input
                           formControlName="correo" class="form-control" id="email" type="email"
                           placeholder="name@example.com" />
-                          <span class="form-text text-danger" *ngIf="validarCampo('correo')">El correo es
-                            obligatorio y tiene que ser valido</span>
-                        </div>
+                        <span class="form-text text-danger" *ngIf="validarCampo('correo')">El correo es
+                          obligatorio y tiene que ser valido</span>
+                      </div>
                       <div class="row g-3 mb-3">
                         <div class="col-xl-6"><label class="form-label" for="password">Password</label><input
                             formControlName="password" class="form-control form-icon-input" id="password"
                             type="password" placeholder="Password" />
-                            <span class="form-text text-danger" *ngIf="validarCampo('password')">El password es
-                              obligatorio </span>
+                          <span class="form-text text-danger" *ngIf="validarCampo('password')">El password es
+                            obligatorio </span>
                         </div>
-                        <div class="col-xl-6"><label class="form-label" for="confirmPassword">Confirm
+                        <div class="col-xl-6"><label class="form-label" for="confirmPassword">Confirmar
                             Password</label><input formControlName="password2" class="form-control form-icon-input"
-                            id="confirmPassword" type="password" placeholder="Confirm Password"
-                            />
-                          <span ngForm  *ngIf="passmsg()" class="form-text text-danger">Los password deben coincidir</span></div>
+                            id="confirmPassword" type="password" placeholder="Confirm Password" />
+                          <span ngForm *ngIf="passmsg()" class="form-text text-danger">Los password deben
+                            coincidir</span>
+                        </div>
                       </div>
                       <div class="form-check mb-3"><input formControlName="terminos" class="form-check-input"
                           id="termsService" type="checkbox" /><label class="form-label fs--1 text-none"
-                          for="termsService">I accept the <a href="#!">terms </a>and <a href="#!">privacy
-                            policy</a></label></div><button class="btn btn-primary w-100 mb-3">Sign up</button>
+                          for="termsService">Aceptar <a href="#!">terminos </a>y <a href="#!">politicas de privacidad
+                          </a></label>
+                          <span class="form-text text-danger" *ngIf="aceptarTerminos()">debes aceptar los terminos </span>
+
+                        </div><button class="btn btn-primary w-100 mb-3">crear</button>
                     </form>
 
-                    <div class="text-center"><a class="fs--1 fw-bold" href="sign-in.html">Sign in to an existing
-                        account</a></div>
-
+                    <div class="text-center"><a class="fs--1 fw-bold" href="sign-in.html">Entrar con una cuenta
+                        existente</a></div>
                   </div>
                 </div>
               </div>

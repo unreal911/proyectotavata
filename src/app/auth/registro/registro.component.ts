@@ -88,16 +88,29 @@ export class RegistroComponent implements OnInit {
     if (this.form.valid && this.passValidas() == true) {
       return;
     }
+    if (this.form.get('terminos')?.value == false) {
+      return;
+    }
     console.log('submit')
-
     this.usuarioService.registroSistema(this.form.value).subscribe({
       next: (r) => {
-
+        Swal.fire(
+          'Buen trabajo!',
+          'Cuenta creada exitosamente!',
+          'success'
+        )
         this.router.navigateByUrl('/login')
         console.log(r)
 
       },
-      error: (e) => { console.log(e) },
+      error: (e) => {
+        Swal.fire(
+          'Error!',
+          e.error.errors[0].msg,
+          'error'
+        )
+        console.log(e.error.errors[0].msg)
+      },
       complete: () => {
 
       }
@@ -105,6 +118,13 @@ export class RegistroComponent implements OnInit {
   }
   validarCampo(nombre: string) {
     if (this.form.get(nombre)?.pristine == false && this.form.get(nombre)?.invalid == true && this.formsubmit == true) {
+      return true
+    } else {
+      return false
+    }
+  }
+  aceptarTerminos() {
+    if (this.form.get('terminos')?.value == false && this.formsubmit == true) {
       return true
     } else {
       return false
