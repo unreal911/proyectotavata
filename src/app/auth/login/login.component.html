@@ -60,6 +60,7 @@
                           class="form-control form-icon-input" id="email"
                             type="email" placeholder="name@example.com" /><span
                             class="fas fa-user text-900 fs--1 form-icon"></span></div>
+                            <span class="form-text text-danger" *ngIf="validarCampo('correo')">El correo debe ser valido y no vacio</span>
                       </div>
                       <div class="mb-3 text-start"><label class="form-label" for="password">Password</label>
                         <div class="form-icon-container"><input
@@ -67,6 +68,7 @@
                           class="form-control form-icon-input" id="password"
                             type="password" placeholder="Password" /><span
                             class="fas fa-key text-900 fs--1 form-icon"></span></div>
+                            <span class="form-text text-danger" *ngIf="validarCampo('password')">El password no debe estar vacio</span>
                       </div>
                       <div class="row flex-between-center mb-7">
                         <div class="col-auto">

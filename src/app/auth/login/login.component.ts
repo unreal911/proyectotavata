@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { authGoogle } from 'src/app/interfaces/authgoogle';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
   apiKey: "AIzaSyAxnw1Yx0XbkEfQMSAQNPwho7NZLnWNoNI",
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     photoURL: '',
     idToken: ''
   }
+  formsubmit: boolean = false
   form: FormGroup = new FormGroup({
     correo: new FormControl(localStorage.getItem('correo') || '', [Validators.email, Validators.required]),
     password: new FormControl('', [Validators.required]),
@@ -79,20 +81,42 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
-  login(){
+  login() {
+
+    this.formsubmit = true
+    if (this.form.invalid) {
+      return;
+    }
+
     console.log(this.form.value)
     this.usuarioService.loginSistema(this.form.value).subscribe({
-      next:(r)=>{
+      next: (r) => {
         console.log(r)
         this.router.navigateByUrl('/dashboard')
       },
-      error:(e)=>{
+      error: (e) => {
         console.log(e)
+        if (e.error.errors) {
+          Swal.fire(
+            'Error!', e.error.errors[0].msg, 'error'
+          )
+        } else {
+          Swal.fire(
+            'Error!', e.error.msg, 'error'
+          )
+        }
       },
-      complete:()=>{
+      complete: () => {
 
       }
     })
+  }
+  validarCampo(nombre: string) {
+    if (this.form.get(nombre)?.pristine == false && this.form.get(nombre)?.invalid == true && this.formsubmit == true) {
+      return true
+    } else {
+      return false
+    }
   }
 
 }
