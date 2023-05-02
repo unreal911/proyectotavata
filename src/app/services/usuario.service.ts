@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Usuario, authGoogle, authSistema, respAuth, } from '../interfaces/authgoogle';
+import { registroUsuario } from '../interfaces/usuario.interface';
 const api_url = environment.url_api
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,12 @@ export class UsuarioService {
           localStorage.setItem('token', resp.token)
         }
       )
+    )
+  }
+  registroSistema(body: registroUsuario) {
+    const url = `${api_url}/usuario`
+    return this.http.post(url, body).pipe(
+      tap()
     )
   }
 }
