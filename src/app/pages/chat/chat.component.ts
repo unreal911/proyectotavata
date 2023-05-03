@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare function iniciarpopup():any
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -8,6 +9,6 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    iniciarpopup()
   }
 }
