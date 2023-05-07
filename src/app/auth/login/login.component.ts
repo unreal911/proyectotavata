@@ -88,16 +88,18 @@ export class LoginComponent implements OnInit {
       .then((result) => {
         // The signed-in user info.
         const user = result.user;
+        console.log(user)
         console.log(result)
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const accessToken = credential?.accessToken;
-
+        console.log(accessToken)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
       .catch((error) => {
         // Handle Errors here.
+        console.log(error)
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
