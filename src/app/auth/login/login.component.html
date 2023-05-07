@@ -46,7 +46,7 @@
                     </div>
                     <button class="btn btn-phoenix-secondary w-100 mb-3" (click)="google_call()">
                       <span class="fab fa-google text-danger me-2 fs--1"></span>Sign in with google</button>
-                    <button class="btn btn-phoenix-secondary w-100">
+                    <button class="btn btn-phoenix-secondary w-100" (click)="facebook_call()">
                       <span class="fab fa-facebook text-primary me-2 fs--1"></span>Sign in with facebook</button>
                     <div class="position-relative">
                       <hr class="bg-200 mt-5 mb-4" />
@@ -55,32 +55,31 @@
 
                     <form (ngSubmit)="login()" [formGroup]="form">
                       <div class="mb-3 text-start"><label class="form-label" for="email">correo</label>
-                        <div class="form-icon-container"><input
-                          formControlName="correo"
-                          class="form-control form-icon-input" id="email"
-                            type="email" placeholder="name@example.com" /><span
-                            class="fas fa-user text-900 fs--1 form-icon"></span></div>
-                            <span class="form-text text-danger" *ngIf="validarCampo('correo')">El correo debe ser valido y no vacio</span>
+                        <div class="form-icon-container"><input formControlName="correo"
+                            class="form-control form-icon-input" id="email" type="email"
+                            placeholder="name@example.com" /><span class="fas fa-user text-900 fs--1 form-icon"></span>
+                        </div>
+                        <span class="form-text text-danger" *ngIf="validarCampo('correo')">El correo debe ser valido y
+                          no vacio</span>
                       </div>
                       <div class="mb-3 text-start"><label class="form-label" for="password">Password</label>
-                        <div class="form-icon-container"><input
-                          formControlName="password"
-                          class="form-control form-icon-input" id="password"
-                            type="password" placeholder="Password" /><span
-                            class="fas fa-key text-900 fs--1 form-icon"></span></div>
-                            <span class="form-text text-danger" *ngIf="validarCampo('password')">El password no debe estar vacio</span>
+                        <div class="form-icon-container"><input formControlName="password"
+                            class="form-control form-icon-input" id="password" type="password"
+                            placeholder="Password" /><span class="fas fa-key text-900 fs--1 form-icon"></span></div>
+                        <span class="form-text text-danger" *ngIf="validarCampo('password')">El password no debe estar
+                          vacio</span>
                       </div>
                       <div class="row flex-between-center mb-7">
                         <div class="col-auto">
-                          <div class="form-check mb-0"><input
-                              formControlName="recordar"
-                            class="form-check-input" id="basic-checkbox"
-                              type="checkbox" checked="checked" /><label class="form-check-label mb-0"
-                              for="basic-checkbox">recordar correo</label></div>
+                          <div class="form-check mb-0"><input formControlName="recordar" class="form-check-input"
+                              id="basic-checkbox" type="checkbox" checked="checked" /><label
+                              class="form-check-label mb-0" for="basic-checkbox">recordar correo</label></div>
                         </div>
-                        <div class="col-auto"><a class="fs--1 fw-semi-bold" href="forgot-password.html">recuperar password  ?</a></div>
+                        <div class="col-auto"><a class="fs--1 fw-semi-bold" href="forgot-password.html">recuperar
+                            password ?</a></div>
                       </div><button class="btn btn-primary w-100 mb-3" type="submit">Sign In</button>
                     </form>
+                    
                     <div class="text-center"><a class="fs--1 fw-bold" href="sign-up.html">Create an account</a></div>
                   </div>
                 </div>
@@ -93,3 +92,22 @@
   </div>
 </main>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: '2090867947982178',
+      xfbml: true,
+      version: 'v16.0'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+

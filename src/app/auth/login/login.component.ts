@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms"
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { authGoogle } from 'src/app/interfaces/authgoogle';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 const provider = new GoogleAuthProvider();
+const providerFacebook = new FacebookAuthProvider()
 const firebaseConfig = {
   apiKey: "AIzaSyAxnw1Yx0XbkEfQMSAQNPwho7NZLnWNoNI",
   authDomain: "fir-loginauth-5553c.firebaseapp.com",
@@ -78,6 +79,32 @@ export class LoginComponent implements OnInit {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+  facebook_call() {
+    const auth = getAuth();
+    signInWithPopup(auth, providerFacebook)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        console.log(result)
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential?.accessToken;
+
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+
         // ...
       });
   }
